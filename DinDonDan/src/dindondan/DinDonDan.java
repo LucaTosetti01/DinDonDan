@@ -5,11 +5,6 @@
  */
 package dindondan;
 
-import dindondan_diagrammadisequenza.CDatiCondivisi;
-import dindondan_diagrammadisequenza.Semaforo;
-import dindondan_diagrammadisequenza.ThDan;
-import dindondan_diagrammadisequenza.ThDin;
-import dindondan_diagrammadisequenza.ThDon;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -97,7 +92,7 @@ public class DinDonDan {
             }
         }
         catch (IOException ex) {
-            Logger.getLogger(ThreadCampane.class.getName()).log(Level.SEVERE, null, ex);       
+            Logger.getLogger(DinDonDan.class.getName()).log(Level.SEVERE, null, ex);       
         }
     }
 }
