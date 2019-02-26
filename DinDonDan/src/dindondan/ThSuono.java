@@ -99,7 +99,11 @@ public class ThSuono extends Thread {
                     break;
                 }
             }
-            if (suono.equals("DIN")) {
+            
+        } catch (InterruptedException ex) {
+
+        }
+        if (suono.equals("DIN")) {
                 ptrdati.SignalDIN();
             }
             if (suono.equals("DON")) {
@@ -108,8 +112,5 @@ public class ThSuono extends Thread {
             if (suono.equals("DAN")) {
                 ptrdati.SignalDAN();
             }
-        } catch (InterruptedException ex) {
-
-        }
     }
 }

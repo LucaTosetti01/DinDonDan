@@ -2,31 +2,37 @@
 actor Utente
 participant main
 entity DatiCondivisi
-entity Semaforo
+entity ThDIN
+entity ThDON
+entity ThDAN
 
-Utente -> main ++ : start
-main -> Semaforo ** : new
+Utente -> main ++ : new
+
 main -> DatiCondivisi ** : new
+main -> ThDIN ** : new
+main -> ThDON ** : new
+main -> ThDAN ** : new
 
-main -> ThDin ** : new
-main -> ThDon ** : new
-main -> ThDan ** : new
+main -> ThDIN ++ : start
+main -> ThDON ++ : start
+main -> ThDAN ++ : start
 
-main -> Utente : Utente inserisce campana vincente
-Utente -> main : scelta
+Utente -> main : Premere invio
 
-main -> ThDin ++ : start
-main -> ThDon ++ : start
-main -> ThDan ++ : start
+ThDIN -> main : Interrupt
+deactivate ThDIN
+ThDON -> main : Interrupt
+deactivate ThDON
+ThDAN -> main : Interrupt
+deactivate ThDAN
 
-Utente -> main : Viene premuto il tasto invio
+note over main : join ThDIN
+note over main : join ThDON
+note over main : join ThDAN
 
+Utente -> main : inserimento campana
 
-ThDin -> main -- : interrupt
-ThDon -> main -- : interrupt
-ThDan -> main -- : interrupt
+DatiCondivisi -> main : datiCondivisi.verificaSeHaiVinto(scelta)
 
-DatiCondivisi -> main : GetContDin,GetContDon,GetContDan
-main -> Utente: risultato
-deactivate main
+main -> Utente : termine programma
 @enduml
