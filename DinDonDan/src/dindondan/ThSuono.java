@@ -67,50 +67,74 @@ public class ThSuono extends Thread {
      *
      */
     public void run() {
+
         boolean verify = true;
         try {
+
             while (verify == true) {
+
+                if (suono.equals("DIN")) {
+                    ptrdati.WaitSynchDin();
+                }
+                if (suono.equals("DON")) {
+                    ptrdati.WaitSynchDon();
+                }
+                if (suono.equals("DAN")) {
+                    ptrdati.WaitSynchDan();
+                }
+
+                
+                
                 if (faiSleep == true && faiYield == false) {
                     System.out.println(suono);
                 }
                 if (faiYield == true && faiSleep == true) {
                     System.out.println(suono);
-                    yield();
+                    //yield();
                 }
                 if (faiSleep == false && faiYield == true) {
-                    yield();
+                    //yield();
                     ptrdati.aggiungi(suono);
                     if (suono.equals("DIN")) {
                         ptrdati.setContaDIN(ptrdati.getContaDIN() + 1);
+                        System.out.println("DIN");
+                        ptrdati.SignalSynchDon();
                     }
                     if (suono.equals("DON")) {
                         ptrdati.setContaDON(ptrdati.getContaDON() + 1);
+                        System.out.println("DON");
+                        ptrdati.SignalSynchDan();
                     }
                     if (suono.equals("DAN")) {
                         ptrdati.setContaDAN(ptrdati.getContaDAN() + 1);
+                        System.out.println("DAN");
+                        System.out.println("-------");
+                        ptrdati.SignalSynchDin();
                     }
                 }
                 int min = 100;
                 int max = 1000;
                 int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
                 sleep(randomNum);
-
                 if (Thread.currentThread().isInterrupted()) {
                     break;
                 }
+                
+                
+                
             }
-            
+
         } catch (InterruptedException ex) {
 
         }
         if (suono.equals("DIN")) {
-                ptrdati.SignalDIN();
-            }
-            if (suono.equals("DON")) {
-                ptrdati.SignalDON();
-            }
-            if (suono.equals("DAN")) {
-                ptrdati.SignalDAN();
-            }
+            ptrdati.SignalDIN();
+        }
+        if (suono.equals("DON")) {
+            ptrdati.SignalDON();
+        }
+        if (suono.equals("DAN")) {
+            ptrdati.SignalDAN();
+        }
     }
 }

@@ -28,6 +28,13 @@ public class DatiCondivisi {
     private Semaphore semDIN;
     private Semaphore semDON;
     private Semaphore semDAN;
+    
+    private Semaphore SynchDin;
+    private Semaphore SynchDon;
+    private Semaphore SynchDan;
+    
+    
+    
 
     public DatiCondivisi() {
         this.schermo=new String [maxElem];
@@ -36,6 +43,10 @@ public class DatiCondivisi {
         semDIN = new Semaphore(0);
         semDON = new Semaphore(0);
         semDAN = new Semaphore(0);
+        
+        SynchDin = new Semaphore(1);
+        SynchDon = new Semaphore(0);
+        SynchDan = new Semaphore(0);
     }
 
     public DatiCondivisi(int contaDIN, int contaDON, int contaDAN) {
@@ -46,6 +57,17 @@ public class DatiCondivisi {
         this.p=0;
         
         
+    }
+    public void WaitSynchDin() throws InterruptedException {
+        SynchDin.acquire();
+    }
+    
+    public void WaitSynchDon() throws InterruptedException {
+        SynchDon.acquire();
+    }
+    
+    public void WaitSynchDan() throws InterruptedException {
+        SynchDan.acquire();
     }
     
     public void WaitDIN() throws InterruptedException {
@@ -60,9 +82,23 @@ public class DatiCondivisi {
         semDAN.acquire();
     }
     
+    public void SignalSynchDin() {
+        SynchDin.release();
+    }
+    
+    public void SignalSynchDon() {
+        SynchDon.release();
+    }
+    
+    public void SignalSynchDan() {
+        SynchDan.release();
+    }
+    
     public void SignalDIN() {
         semDIN.release();
     }
+    
+    
     
     public void SignalDON() {
         semDON.release();
