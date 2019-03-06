@@ -42,10 +42,12 @@ public class NBDinDonDan {
         ThSuono th1 = new ThSuono("DIN", 3, dati);
         ThSuono th2 = new ThSuono("DON", 3, dati);
         ThSuono th3 = new ThSuono("DAN", 3, dati);
+        ThVisualizza th4=new ThVisualizza(dati);
         try {
             th1.start();
             th2.start();
             th3.start();
+            th4.start();
             
             boolean loop = true;
             while(loop){
@@ -67,6 +69,10 @@ public class NBDinDonDan {
             //th1.join();
             //th2.join();
             //th3.join();
+            if(ThVisualizza.currentThread().isAlive()) {
+                dati.semVisualizza1Signal();
+                th4.interrupt();
+            }
             
 
             System.out.println("Qual è il suono che è stato richiamato più volte?");

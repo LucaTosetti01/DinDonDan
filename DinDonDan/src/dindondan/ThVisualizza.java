@@ -5,25 +5,42 @@
  */
 package dindondan;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author tosetti_luca
  */
-public class ThVisualizza extends Thread{
-    
+public class ThVisualizza extends Thread {
+
     DatiCondivisi ptrdati;
-    
+
     public ThVisualizza() {
-        
+
     }
-    
+
     public ThVisualizza(DatiCondivisi dati) {
-        ptrdati=dati;
+        ptrdati = dati;
     }
-    
+
     public void run() {
-        while(true) {
-            System.out.println();
+        try {
+            while (true) {
+
+                ptrdati.semVisualizza1Wait();
+                
+                System.out.println(ptrdati.getCampana());
+                
+                if (Thread.currentThread().isInterrupted()) {
+                    break;
+                }
+                
+                ptrdati.semVisualizza2Signal();
+                
+            }
+        } catch (InterruptedException ex) {
+            
         }
     }
 }
