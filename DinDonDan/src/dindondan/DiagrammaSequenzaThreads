@@ -1,0 +1,68 @@
+@startuml
+actor Utente
+participant main
+entity ThDIN
+entity ThDON
+entity ThDAN
+entity ThVisualizza
+entity DatiCondivisi
+
+Utente -> main ++ : start
+
+main -> ThDIN ** : new
+main -> ThDON ** : new
+main -> ThDAN ** : new
+main -> ThVisualizza ** : new
+
+main -> ThDIN ++ : start
+main -> ThDON ++ : start
+main -> ThDAN ++ : start
+main -> ThVisualizza ++ : start
+
+ThVisualizza -> DatiCondivisi : ptrdati.semVisualizza1Wait()
+
+ThDIN -> DatiCondivisi : ptrdati.WaitSynchDin()
+
+ThDON -> DatiCondivisi : ptrdati.WaitSynchDon()
+
+ThDAN -> DatiCondivisi : ptrdati.WaitSynchDan()
+
+ThDIN -> DatiCondivisi : ptrdati.aggiungi(suono)
+ThDIN -> DatiCondivisi : ptrdati.semVisualizza2Wait()
+ThDIN -> DatiCondivisi : ptrdati.setContaDIN(ptrdati.getContaDIN() + 1)
+ThDIN -> DatiCondivisi : ptrdati.setCampana(suono);
+ThDIN -> DatiCondivisi : ptrdati.semVisualizza1Signal();
+ThDIN -> DatiCondivisi : ptrdati.SignalSynchDon();
+
+ThVisualizza -> Utente : Output campana 
+ThVisualizza -> DatiCondivisi : ptrdati.semVisualizza1Wait()
+
+ThDON -> DatiCondivisi : ptrdati.aggiungi(suono)
+ThDON -> DatiCondivisi : ptrdati.semVisualizza2Wait()
+ThDON -> DatiCondivisi : ptrdati.setContaDON(ptrdati.getContaDON() + 1)
+ThDON -> DatiCondivisi : ptrdati.setCampana(suono)
+ThDON -> DatiCondivisi : ptrdati.semVisualizza1Signal()
+ThDON -> DatiCondivisi : ptrdati.SignalSynchDan()
+
+ThVisualizza -> Utente : Output campana 
+ThVisualizza -> DatiCondivisi : ptrdati.semVisualizza1Wait()
+
+ThDAN -> DatiCondivisi : ptrdati.aggiungi(suono)
+ThDAN -> DatiCondivisi : ptrdati.semVisualizza2Wait()
+ThDAN -> DatiCondivisi : ptrdati.setContaDAN(ptrdati.getContaDAN() + 1)
+ThDAN -> DatiCondivisi : ptrdati.setCampana(suono)
+ThDAN -> DatiCondivisi : ptrdati.semVisualizza1Signal()
+ThDAN -> DatiCondivisi : ptrdati.SignalSynchDin()
+
+ThVisualizza -> Utente : Output campana 
+
+Utente -> main : Premuta tasto invio
+ThDIN -> main -- : interrupt
+ThDON -> main -- : interrupt
+ThDAN -> main -- : interrupt
+ThVisualizza -> main -- : interrupt
+
+main -> Utente -- : programma terminato
+
+
+@enduml
